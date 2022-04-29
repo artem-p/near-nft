@@ -23,9 +23,20 @@ mod royalty;
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 pub struct Contract {
-    /*
-        FILL THIS IN
-    */
+    //  contract owner
+    pub owner_id: AccountId,
+
+    //  keeps track of all the token IDs for a given account
+    pub tokens_per_owner: LookupMap<AccountId, UnorderedSet<TokenId>>,
+
+    //  keeps track of the token struct for a given token ID
+    pub tokens_by_id: LookupMap<TokenId, Token>,
+
+    //  keeps track of the token metadata fot a given token ID
+    pub token_metadata_by_id: UnorderedMap<TokenId, TokenMetadata>,
+
+    //  keeps track of the metadata for the contract
+    pub metadata: LazyOption<NFTContractMetadata>,
 }
 
 /// Helper structure for keys of the persistent collections.
