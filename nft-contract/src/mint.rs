@@ -5,15 +5,15 @@ impl Contract {
     #[payable]
     pub fn nft_mint(
         &mut self,
-        token_id: Option<TokenId>,
+        token_id: TokenId,
         metadata: TokenMetadata,
-        receiver_id: Option<AccountId>,
+        receiver_id: AccountId,
     ) {
         //  measure the initial storage being used on the contract
         let initial_storage_usage = env::storage_usage();
 
         let token = Token {
-            owner_id: reciver_id,
+            owner_id: receiver_id,
         };
         
         //  insert the token ID and token struct and make sure that the token doesn't exist
