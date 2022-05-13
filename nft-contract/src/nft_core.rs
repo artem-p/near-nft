@@ -12,7 +12,15 @@ pub trait NonFungibleTokenCore {
         receiver_id: AccountId,
         token_id: TokenId,
         memo: Option<String>,
-    );
+    ) {
+        //assert that the user attached exactly 1 yoctoNEAR. This is for security and so that the user will be redirected to the NEAR wallet. 
+        assert_one_yocto();
+
+        //get the sender to transfer the token from the sender to the receiver
+        let sender_id = env::predecessor_account_id();
+
+        
+    };
 
     //transfers an NFT to a receiver and calls a function on the receiver ID's contract
     /// Returns `true` if the token was transferred from the sender's account.
