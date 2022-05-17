@@ -2,7 +2,7 @@ use crate::*;
 use near_sdk::{CryptoHash};
 use std::mem::size_of;
 
-//used to generate a unique prefix in our storage collections (this is to avoid data collisions)
+//  used to generate a unique prefix in our storage collections (this is to avoid data collisions)
 pub(crate) fn hash_account_id(account_id: &AccountId) -> CryptoHash {
     //get the default hash
     let mut hash = CryptoHash::default();
@@ -11,7 +11,18 @@ pub(crate) fn hash_account_id(account_id: &AccountId) -> CryptoHash {
     hash
 }
 
-//refund the initial deposit based on the amount of storage that was used up
+
+//  used to make sure the user attached exactly 1 yoctoNEAR
+pub(crate) fn assert_one_yocto() {
+    assert_eq!(
+        env::attached_deposit(),
+        1,
+        "Requires attached deposit of exactly 1 yoctoNEAR",
+    )
+}
+
+
+//  refund the initial deposit based on the amount of storage that was used up
 pub(crate) fn refund_deposit(storage_used: u64) {
     //get how much it would cost to store the information
     let required_cost = env::storage_byte_cost() * Balance::from(storage_used);
